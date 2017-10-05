@@ -24,21 +24,36 @@ plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
 plt.legend()
 plt.xlabel("bumpiness")
 plt.ylabel("grade")
-plt.show()
+# plt.draw()
+
 ################################################################################
 
 
-### your code here!  name your classifier object clf if you want the 
+### your code here!  name your classifier object clf if you want the
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
+
+print "Beginning..."
+# clf = DecisionTreeClassifier()
+
+estimators = 20
+learn_rate = 0.1
+
+clf = AdaBoostClassifier(n_estimators=estimators, learning_rate=learn_rate)
+clf.fit(features_train, labels_train)
+
+score = clf.score(features_test, labels_test)
 
 
+image_name = type(clf).__name__ + "[" + str(score) + "]"
+meta = " [score:" + str(score) + ", n_estimators:" + str(estimators) + ", learning_rate" + str(learn_rate) + "]"
 
-
-
-
+# plt.show()
 
 try:
-    prettyPicture(clf, features_test, labels_test)
+    # prettyPictureWithMeta(clf, features_test, labels_test, score)
+    prettyPicture(clf, features_test, labels_test, image_name, meta)
 except NameError:
     pass
