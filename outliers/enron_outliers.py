@@ -27,6 +27,19 @@ for point in data:
 #                 print key
 #                 print data_dict[key] # prints TOTAL
 
+
+# Determine the labels for the other obvious outliers
+# people = []
+# for name in data_dict:
+#     entry = data_dict[name]
+#     person = (name, entry["bonus"], entry["salary"])
+#     if entry["bonus"] != "NaN" and entry["salary"] != "NaN":
+#         # if entry["bonus"] > 5000000 and entry["salary"] > 1000000:
+#         #     print person
+#         people.append(person)
+# people = sorted(people, key=lambda x: x[1])
+# print people[len(people)-4:]
+
 matplotlib.pyplot.xlabel("salary")
 matplotlib.pyplot.ylabel("bonus")
 matplotlib.pyplot.show()
