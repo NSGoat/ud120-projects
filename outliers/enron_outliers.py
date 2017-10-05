@@ -10,10 +10,23 @@ from feature_format import featureFormat, targetFeatureSplit
 ### read in data dictionary, convert to numpy array
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
 features = ["salary", "bonus"]
+data_dict.pop("TOTAL", 0) # Remove outlier
 data = featureFormat(data_dict, features)
 
+for point in data:
+    salary = point[0]
+    bonus = point[1]
+    matplotlib.pyplot.scatter(salary, bonus)
 
-### your code below
+# Determine the label for the most obvious outlier
+#     if bonus > 97343610:
+#         # print point
+#         # print data_dict
+#         for key in data_dict:
+#             if data_dict[key]["bonus"] == bonus:
+#                 print key
+#                 print data_dict[key] # prints TOTAL
 
-
-
+matplotlib.pyplot.xlabel("salary")
+matplotlib.pyplot.ylabel("bonus")
+matplotlib.pyplot.show()
