@@ -43,13 +43,28 @@ data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r")
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
+# Filter out items that are missing values for exercised_stock_options
+data_dict = {k: v for k, v in data_dict.items() if v["exercised_stock_options"] != "NaN" }
 
-### the input features we want to use 
-### can be any key in the person-level dictionary (salary, director_fees, etc.) 
+# Find min and max exercised_stock_options
+key_min_stock = min(data_dict, key=lambda k: data_dict[k]["exercised_stock_options"])
+key_max_stock = max(data_dict, key=lambda k: data_dict[k]["exercised_stock_options"])
+print key_min_stock, data_dict[key_min_stock]["exercised_stock_options"], "exercised_stock_options min"
+print key_max_stock, data_dict[key_max_stock]["exercised_stock_options"], "exercised_stock_options max"
+
+# Filter out items that are missing values for salary
+data_dict = {k: v for k, v in data_dict.items() if v["salary"] != "NaN" }
+
+# Find min and max saleries
+key_min_salary = min(data_dict, key=lambda k: data_dict[k]["salary"])
+key_max_salary = max(data_dict, key=lambda k: data_dict[k]["salary"])
+print key_min_salary, data_dict[key_min_salary]["salary"], "salary min"
+print key_max_salary, data_dict[key_max_salary]["salary"], "salary max"
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2]
+features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
@@ -58,7 +73,7 @@ poi, finance_features = targetFeatureSplit( data )
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2 in finance_features:
+for f1, f2, _ in finance_features:
     plt.scatter( f1, f2 )
 plt.show()
 
@@ -68,7 +83,7 @@ plt.show()
 from sklearn.cluster import KMeans
 
 kmeans = KMeans(n_clusters=2, n_init=10, max_iter=300)
-kmeans.fit(data)
+kmeans.fit(finance_features)
 pred = kmeans.labels_
 
 
