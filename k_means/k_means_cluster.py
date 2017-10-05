@@ -65,7 +65,11 @@ plt.show()
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
 
+from sklearn.cluster import KMeans
 
+kmeans = KMeans(n_clusters=2, n_init=10, max_iter=300)
+kmeans.fit(data)
+pred = kmeans.labels_
 
 
 ### rename the "name" parameter when you change the number of features
