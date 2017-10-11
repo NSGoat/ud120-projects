@@ -42,11 +42,8 @@ from sklearn import tree
 
 clf = tree.DecisionTreeClassifier()
 clf.fit(features_train, labels_train)
-print clf.score(features_test, labels_test)
-
-print "train", len(features_train), "test", len(features_test)
-print "train", len(labels_train), "test", len(labels_test)
+print "Accuracy", clf.score(features_test, labels_test)
 
 for index, importance in enumerate(clf.feature_importances_):
-    if importance > 0.1:
-        print importance, vectorizer.get_feature_names()[index], index
+    if importance > 0.2:
+        print "Importance", importance, "for feature", vectorizer.get_feature_names()[index]
